@@ -56,6 +56,7 @@ function startGame() {
   winMessage.style.display = 'none';
 
   gameInterval = setInterval(activateMole, 1000);
+  startBtn.disabled = true;
 }
 
 // Stop game
@@ -66,6 +67,7 @@ function stopGame() {
     activeMole.classList.remove('active');
     activeMole = null;
   }
+  startBtn.disabled = false;
 }
 
 // Restart game
