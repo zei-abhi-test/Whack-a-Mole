@@ -1,4 +1,4 @@
-// Whack-a-Mole Game Logic
+// Whack-a-Mole Game Logic — Win at 5 Points
 
 // Select elements
 const scoreEl = document.getElementById('score');
@@ -9,8 +9,18 @@ const restartBtn = document.getElementById('restart');
 let score = 0;
 let activeMole = null;
 let gameInterval = null;
-let moleTimeout = null;
 let gameRunning = false;
+
+// Create a win message element
+const winMessage = document.createElement('div');
+winMessage.textContent = '🎉 You win!';
+winMessage.style.fontWeight = '700';
+winMessage.style.fontSize = '20px';
+winMessage.style.color = '#66ff99';
+winMessage.style.textAlign = 'center';
+winMessage.style.marginTop = '12px';
+winMessage.style.display = 'none';
+document.querySelector('.controls').prepend(winMessage);
 
 // Function to pick a random mole
 function getRandomMole() {
@@ -28,10 +38,12 @@ function activateMole() {
   activeMole = mole;
   mole.classList.add('active');
 
-  // Deactivate after some time
-  moleTimeout = setTimeout(() => {
-    mole.classList.remove('active');
-    activeMole = null;
+  // Auto-remove after 1s
+  setTimeout(() => {
+    if (mole === activeMole) {
+      mole.classList.remove('active');
+      activeMole = null;
+    }
   }, 1000);
 }
 
@@ -41,30 +53,41 @@ function startGame() {
   gameRunning = true;
   score = 0;
   scoreEl.textContent = score;
+  winMessage.style.display = 'none';
 
-  gameInterval = setInterval(activateMole, 1200);
+  gameInterval = setInterval(activateMole, 1000);
 }
 
-// Restart game
-function restartGame() {
+// Stop game
+function stopGame() {
   clearInterval(gameInterval);
-  clearTimeout(moleTimeout);
+  gameRunning = false;
   if (activeMole) {
     activeMole.classList.remove('active');
     activeMole = null;
   }
-  gameRunning = false;
+}
+
+// Restart game
+function restartGame() {
+  stopGame();
   startGame();
 }
 
 // Handle mole click
 moles.forEach(mole => {
   mole.addEventListener('click', () => {
+    if (!gameRunning) return;
     if (mole.classList.contains('active')) {
       score++;
       scoreEl.textContent = score;
       mole.classList.remove('active');
       activeMole = null;
+
+      if (score >= 5) {
+        stopGame();
+        winMessage.style.display = 'block';
+      }
     }
   });
 });
