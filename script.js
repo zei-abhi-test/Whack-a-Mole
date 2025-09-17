@@ -3,36 +3,13 @@
 // Select elements
 const scoreEl = document.getElementById('score');
 const moles = document.querySelectorAll('.mole');
-const startBtn = document.getElementById('start');
 const restartBtn = document.getElementById('restart');
+const winMessage = document.getElementById('win-message');
 
 let score = 0;
 let activeMole = null;
 let gameInterval = null;
-let timerInterval = null;
 let gameRunning = false;
-let secondsPlayed = 0;
-
-// Create a win message element
-const winMessage = document.createElement('div');
-winMessage.textContent = '🎉 You win!';
-winMessage.style.fontWeight = '700';
-winMessage.style.fontSize = '20px';
-winMessage.style.color = '#66ff99';
-winMessage.style.textAlign = 'center';
-winMessage.style.marginTop = '12px';
-winMessage.style.display = 'none';
-document.querySelector('.controls').prepend(winMessage);
-
-// Create a timer display
-const timerDisplay = document.createElement('div');
-timerDisplay.textContent = 'Time: 0s';
-timerDisplay.style.fontWeight = '600';
-timerDisplay.style.fontSize = '16px';
-timerDisplay.style.color = '#fff';
-timerDisplay.style.textAlign = 'center';
-timerDisplay.style.marginTop = '8px';
-document.querySelector('.controls').append(timerDisplay);
 
 // Function to pick a random mole
 function getRandomMole() {
@@ -59,21 +36,6 @@ function activateMole() {
   }, 1000);
 }
 
-// Start timer
-function startTimer() {
-  secondsPlayed = 0;
-  timerDisplay.textContent = `Time: ${secondsPlayed}s`;
-  timerInterval = setInterval(() => {
-    secondsPlayed++;
-    timerDisplay.textContent = `Time: ${secondsPlayed}s`;
-  }, 1000);
-}
-
-// Stop timer
-function stopTimer() {
-  clearInterval(timerInterval);
-}
-
 // Start game
 function startGame() {
   if (gameRunning) return;
@@ -83,20 +45,16 @@ function startGame() {
   winMessage.style.display = 'none';
 
   gameInterval = setInterval(activateMole, 1000);
-  startTimer();
-  startBtn.disabled = true;
 }
 
 // Stop game
 function stopGame() {
   clearInterval(gameInterval);
-  stopTimer();
   gameRunning = false;
   if (activeMole) {
     activeMole.classList.remove('active');
     activeMole = null;
   }
-  startBtn.disabled = false;
 }
 
 // Restart game
@@ -124,5 +82,7 @@ moles.forEach(mole => {
 });
 
 // Attach button events
-startBtn.addEventListener('click', startGame);
 restartBtn.addEventListener('click', restartGame);
+
+// Start game automatically on page load
+startGame();

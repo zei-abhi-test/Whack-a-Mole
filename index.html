@@ -1,54 +1,30 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Whack-a-Mole — Layout (HTML + CSS)</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whack-a-Mole</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
-    <main class="game-card" role="main">
-      <div class="header">
-        <h1>Whack-a-Mole</h1>
-        <div class="score-box" aria-live="polite">
-          <span>Score:</span>
-          <span class="score-value" id="score">0</span>
-        </div>
-      </div>
+  <div class="game-container">
+    <h1>Whack-a-Mole</h1>
+    <p>Score: <span id="score">0</span></p>
 
-      <div class="board-wrap">
-        <div class="board" role="region" aria-label="Game board">
+    <!-- Game board -->
+    <div class="game-board">
+      <button class="mole" aria-label="Mole 1"><span class="visually-hidden">Mole 1</span></button>
+      <button class="mole" aria-label="Mole 2"><span class="visually-hidden">Mole 2</span></button>
+      <button class="mole" aria-label="Mole 3"><span class="visually-hidden">Mole 3</span></button>
+    </div>
 
-          <!-- Mole 1 -->
-          <div style="text-align:center">
-            <button class="mole" id="mole-1" aria-pressed="false" aria-label="Mole 1">Hit</button>
-            <span class="mole-label">Hole 1</span>
-          </div>
+    <!-- Win message -->
+    <p id="win-message" style="display: none;">🎉 You win! 🎉</p>
 
-          <!-- Mole 2 -->
-          <div style="text-align:center">
-            <button class="mole" id="mole-2" aria-pressed="false" aria-label="Mole 2">Hit</button>
-            <span class="mole-label">Hole 2</span>
-          </div>
-
-          <!-- Mole 3 -->
-          <div style="text-align:center">
-            <button class="mole" id="mole-3" aria-pressed="false" aria-label="Mole 3">Hit</button>
-            <span class="mole-label">Hole 3</span>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="controls">
-        <div class="meta">Tap a mole when it lights up. (JS will add behavior.)</div>
-        <div style="display:flex;gap:10px">
-          <button class="btn btn--primary" id="start">Start</button>
-          <button class="btn" id="restart">Restart</button>
-        </div>
-      </div>
-    </main>
+    <!-- Restart button -->
+    <button id="restart">Restart</button>
   </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
