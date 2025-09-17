@@ -164,3 +164,25 @@ h1{
   .board{gap:16px;padding:18px}
   h1{font-size:20px}
 }
+/* Default mole style */
+.mole {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: brown;   /* base mole color */
+  border: 3px solid #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+/* Active mole style */
+.mole.active {
+  background-color: orange;  /* changed from green to orange */
+  transform: scale(1.1);     /* little pop effect */
+  box-shadow: 0 0 15px rgba(255, 165, 0, 0.7);
+}
+
+/* Mole click effect */
+.mole:active {
+  transform: scale(0.95);
+}
